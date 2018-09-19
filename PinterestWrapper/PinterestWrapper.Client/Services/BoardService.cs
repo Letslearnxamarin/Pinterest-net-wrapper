@@ -4,13 +4,13 @@ using System.Text;
 
 namespace PinterestService.Client.Services
 {
-    public class BoardService : BaseService
+    public class BoardService : PinterestService
     {
         public BoardService(string version)
         {
             this.Version = version;
-            this.Type = "Boards";
         }
 
+        
     }
 }

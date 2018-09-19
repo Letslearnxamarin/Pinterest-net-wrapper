@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using PinterestService.Client.Utility;
 using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -9,133 +10,124 @@ namespace PinterestService.Client
 {
     public abstract class BaseService
     {
-        private string _version = "v1";
-        public string Version
-        {
-            get
-            {
-                return _version;
-            }
-            set
-            {
-                if (!string.IsNullOrEmpty(value))
-                {
-                    _version = value;
-                }
-            }
-        }
+        public RequestStatus Status { get; set; }
+        public string Url { get; set; }
 
-        string BaseUrl { get { return $"https://api.pinterest.com/{Version}/"; } }
-
-        public string Type { get; set; }
-
-        HttpRequestMessage _requestMessage { get; set; }
 
         public async Task<TResult> Post<T, TResult>(string token, T jsonObject)
         {
-            return await Execute(token, jsonObject, async (p,c) => {
-
-                var content = new StringContent(JsonConvert.SerializeObject(p), Encoding.UTF8, "application/json");
-                var response = await c.PostAsync(BaseUrl, content);
-
-                try
-                {
-                    response.EnsureSuccessStatusCode();
-                    var result = await response.Content.ReadAsStringAsync();
-                    return JsonConvert.DeserializeObject<TResult>(result);
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
-
-            });
-        }
-
-        public async Task<TResult> Get<T, TResult>(string token)
-        {
-            return await Execute(token, async (c) => {
-                
-                var response = await c.GetAsync(BaseUrl);
-
-                try
-                {
-                    response.EnsureSuccessStatusCode();
-                    var result = await response.Content.ReadAsStringAsync();
-                    return JsonConvert.DeserializeObject<TResult>(result);
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
-
-            });
-        }
-
-        public async Task<TResult> Delete<T, TResult>(string token)
-        {
-            return await Execute(token, async (c) => {
-
-                var response = await c.DeleteAsync(BaseUrl);
-
-                try
-                {
-                    response.EnsureSuccessStatusCode();
-                    var result = await response.Content.ReadAsStringAsync();
-                    return JsonConvert.DeserializeObject<TResult>(result);
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
-
-            });
-        }
-
-        public async Task<TResult> Patch<T, TResult>(string token, T jsonObject)
-        {
-            return await Execute(token, jsonObject, async (p, c) => {
-
-                var content = new StringContent(JsonConvert.SerializeObject(p), Encoding.UTF8, "application/json");
-                var response = await c.PutAsync(BaseUrl, content);
-
-                try
-                {
-                    response.EnsureSuccessStatusCode();
-                    var result = await response.Content.ReadAsStringAsync();
-                    return JsonConvert.DeserializeObject<TResult>(result);
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
-
-            });
-        }
-
-        public async Task<TResult> Execute<T, TResult>(string token, T payload, Func<T, HttpClient, Task<TResult>> action)
-        {
-            using (var client = GetClient(token))
+            return await Execute(jsonObject, async (p, c) =>
             {
-                return  await action(payload, client);
+
+                var content = new StringContent(JsonConvert.SerializeObject(p), Encoding.UTF8, "application/json");
+                var response = await c.PostAsync(Url, content);
+                return await GetResponseString<TResult>(response);
+
+            });
+        }
+
+        public async Task<TResult> GetAsync<T, TResult>()
+        {
+            return await Execute(async (c) =>
+            {
+
+                var response = await c.GetAsync(Url);
+                return await GetResponseString<TResult>(response);
+
+            });
+        }
+
+        public async Task<TResult> DeleteAsync<T, TResult>()
+        {
+            return await Execute(async (c) =>
+            {
+
+                var response = await c.DeleteAsync(Url);
+                return await GetResponseString<TResult>(response);
+
+            });
+        }
+
+        public async Task<TResult> PatchAsync<T, TResult>(T jsonObject)
+        {
+            return await Execute(jsonObject, async (p, c) =>
+            {
+                var content = new StringContent(JsonConvert.SerializeObject(p), Encoding.UTF8, "application/json");
+                var response = await c.PatchAsync(Url, content);
+                return await GetResponseString<TResult>(response);
+
+            });
+        }
+
+        public async Task<TResult> PutAsync<T, TResult>(T jsonObject)
+        {
+            return await Execute(jsonObject, async (p, c) =>
+            {
+                var content = new StringContent(JsonConvert.SerializeObject(p), Encoding.UTF8, "application/json");
+                var response = await c.PutAsync(Url, content);
+                return await GetResponseString<TResult>(response);
+
+            });
+        }
+
+        private async Task<TResult> Execute<T, TResult>(T payload, Func<T, HttpClient, Task<TResult>> action)
+        {
+            Status.Request = RequestStatusEnum.Executed;
+
+            UrlCheck();
+
+            if (payload == null)
+                throw new Exception("No Payload provided");
+            
+            using (var client = GetClient())
+            {
+                return await action(payload, client);
             }
 
         }
 
-        public async Task<TResult> Execute<TResult>(string token, Func<HttpClient, Task<TResult>> action)
+        private async Task<TResult> Execute<TResult>(Func<HttpClient, Task<TResult>> action)
         {
-            using (var client = GetClient(token))
+            Status.Request = RequestStatusEnum.Executed;
+
+            UrlCheck();
+
+            using (var client = GetClient())
             {
                 return await action(client);
             }
 
         }
 
-        private HttpClient GetClient(string token)
+        private void UrlCheck()
+        {
+            if (string.IsNullOrEmpty(Url))
+            {
+                throw new Exception("No Url Provided");
+            }
+        }
+
+        public virtual HttpClient GetClient()
         {
             var client = new HttpClient();
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("access_token", token);
             return client;
+        }
+
+        private async Task<TResult> GetResponseString<TResult>(HttpResponseMessage response)
+        {
+            try
+            {
+                response.EnsureSuccessStatusCode();
+                Status.Request = RequestStatusEnum.AwaitResponse;
+                var result = await response.Content.ReadAsStringAsync();
+                Status.Request = RequestStatusEnum.Complete;
+                return JsonConvert.DeserializeObject<TResult>(result);
+            }
+            catch
+            {
+                Status.Request = RequestStatusEnum.Error;
+                throw;
+            }
         }
 
     }
