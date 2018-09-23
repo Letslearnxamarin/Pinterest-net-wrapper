@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2026
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PinterestWrapper.Client", "PinterestWrapper.Client\PinterestWrapper.Client.csproj", "{E79405ED-88E6-4856-AF88-9B931659C55C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PinterestService.Client", "PinterestWrapper.Client\PinterestService.Client.csproj", "{E79405ED-88E6-4856-AF88-9B931659C55C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PinterestService.Tests", "PinterestService.Tests\PinterestService.Tests.csproj", "{4C8F3924-CC1E-4679-85DD-875FD867E126}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{E79405ED-88E6-4856-AF88-9B931659C55C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E79405ED-88E6-4856-AF88-9B931659C55C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E79405ED-88E6-4856-AF88-9B931659C55C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C8F3924-CC1E-4679-85DD-875FD867E126}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C8F3924-CC1E-4679-85DD-875FD867E126}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C8F3924-CC1E-4679-85DD-875FD867E126}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C8F3924-CC1E-4679-85DD-875FD867E126}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

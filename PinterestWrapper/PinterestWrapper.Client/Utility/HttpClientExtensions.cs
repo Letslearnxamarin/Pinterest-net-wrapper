@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PinterestService.Client.Utility
 {
-    public static class HttpClientExtensions
+    internal static class HttpClientExtensions
     {
         /// <summary>
         /// Send a PATCH request to the specified Uri as an asynchronous operation.
@@ -26,6 +26,12 @@ namespace PinterestService.Client.Utility
             return client.PatchAsync(CreateUri(requestUri), content);
         }
 
+        public static Task<HttpResponseMessage> DeleteAsync(this HttpClient client, string requestUri, HttpContent content)
+        {
+            return client.DeleteAsync(CreateUri(requestUri), content);
+        }
+
+
         /// <summary>
         /// Send a PATCH request to the specified Uri as an asynchronous operation.
         /// </summary>
@@ -42,6 +48,12 @@ namespace PinterestService.Client.Utility
         {
             return client.PatchAsync(requestUri, content, CancellationToken.None);
         }
+
+        public static Task<HttpResponseMessage> DeleteAsync(this HttpClient client, Uri requestUri, HttpContent content)
+        {
+            return client.DeleteAsync(requestUri, content, CancellationToken.None);
+        }
+
         /// <summary>
         /// Send a PATCH request with a cancellation token as an asynchronous operation.
         /// </summary>
@@ -59,6 +71,12 @@ namespace PinterestService.Client.Utility
         {
             return client.PatchAsync(CreateUri(requestUri), content, cancellationToken);
         }
+
+        public static Task<HttpResponseMessage> DeleteAsync(this HttpClient client, string requestUri, HttpContent content, CancellationToken cancellationToken)
+        {
+            return client.DeleteAsync(CreateUri(requestUri), content, cancellationToken);
+        }
+
 
         /// <summary>
         /// Send a PATCH request with a cancellation token as an asynchronous operation.
@@ -80,6 +98,16 @@ namespace PinterestService.Client.Utility
                 Content = content
             }, cancellationToken);
         }
+
+
+        public static Task<HttpResponseMessage> DeleteAsync(this HttpClient client, Uri requestUri, HttpContent content, CancellationToken cancellationToken)
+        {
+            return client.SendAsync(new HttpRequestMessage(new HttpMethod("DELETE"), requestUri)
+            {
+                Content = content
+            }, cancellationToken);
+        }
+
 
         private static Uri CreateUri(string uri)
         {

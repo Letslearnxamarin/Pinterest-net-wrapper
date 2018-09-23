@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PinterestService.Client.Utility;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -6,36 +7,42 @@ using System.Text;
 
 namespace PinterestService.Client
 {
-    public abstract class PinterestService : BaseService
+    internal class PinterestService : BaseService
     {
-        private string _version = "v1";
-        public string Version
+        public ConfigHelper Config;
+
+        private readonly string AccessToken;
+
+        public PinterestService(string accessToken)
         {
-            get
-            {
-                return _version;
-            }
-            set
-            {
-                if (!string.IsNullOrEmpty(value))
-                {
-                    _version = value;
-                }
-            }
+            Config = new ConfigHelper();
+            AccessToken = accessToken;
         }
 
-        public string Token { get; set; }
-
-        public string BaseUrl { get { return $"https://api.pinterest.com/{Version}/"; } }
-
-        public override HttpClient GetClient()
+        public override HttpClient GetClient(string url)
         {
-            if (string.IsNullOrEmpty(Token))
-                throw new Exception("Missing Access Token");
-
+            Uri request = new Uri(url);
             var client = new HttpClient();
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("access_token", Token);
-            return client;
+
+            if (request.AbsolutePath.Contains("oauth"))
+            {
+                return client;
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(AccessToken))
+                    throw new ArgumentNullException($"{nameof(AccessToken)} Missing Access Token");
+
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("access_token", AccessToken);
+                return client;
+            }
+
         }
+
+        public string BuildRequestUrl(string call)
+        {
+            return $"{Config.BaseUrl}{Config.Version}{call}";
+        }
+
     }
 }
