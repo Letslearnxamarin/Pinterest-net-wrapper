@@ -25,7 +25,8 @@ namespace PinterestService.Client
 
                 AccessTokenGuard();
 
-                return new BoardService(AccessToken);
+                _boardService =  new BoardService(AccessToken);
+                return _boardService;
 
             }
         }
@@ -41,7 +42,8 @@ namespace PinterestService.Client
 
                 AccessTokenGuard();
 
-                return new PinService(AccessToken);
+                _pinService = new PinService(AccessToken);
+                return _pinService;
 
             }
         }
@@ -58,7 +60,8 @@ namespace PinterestService.Client
 
                 AccessTokenGuard();
 
-                return new UserService(AccessToken);
+                _userService =  new UserService(AccessToken);
+                return _userService;
 
             }
         }
@@ -75,7 +78,8 @@ namespace PinterestService.Client
 
                 AccessTokenGuard();
 
-                return new SectionService(AccessToken);
+                _sectionService = new SectionService(AccessToken);
+                return _sectionService;
 
             }
         }
@@ -128,10 +132,10 @@ namespace PinterestService.Client
             return await BoardService.GetUsersBoards();
         }
 
-        public async Task<Board> EditBoard(string username, string board_name)
+        public async Task<Board> EditBoard(string username, string board_name, string name, string description)
         {
             BoardGuardCheck(username, board_name);
-            return await BoardService.EditBoard(username, board_name);
+            return await BoardService.EditBoard(username, board_name, name,description);
         }
 
         public async Task<bool> DeleteBoard(string username, string board_name)
@@ -276,7 +280,7 @@ namespace PinterestService.Client
 
         public async Task<bool> DeleteSection(int id)
         {
-            return await SectionService.DeletePin(id);
+            return await SectionService.DeleteSection(id);
         }
 
         #endregion  

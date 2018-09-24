@@ -1,9 +1,8 @@
-﻿
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 
 namespace PinterestService.Client.Utility
 {
-    internal class ConfigHelper
+    public class ConfigHelper
     {
         readonly IConfigurationRoot _configuration;
 

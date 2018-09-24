@@ -35,7 +35,7 @@ namespace PinterestService.Client.Services
             return await GetAsync<Boards>(BuildRequestUrl($"/me/boards/"));
         }
 
-        public async Task<Board> EditBoard(string username, string board_name)
+        public async Task<Board> EditBoard(string username, string board_name, string name, string description)
         {
             return await PatchAsync<BaseRequest, Board>(BuildRequestUrl($"/boards/{username}/{board_name}"), new BaseRequest() { Name = name, Description = description });
         }

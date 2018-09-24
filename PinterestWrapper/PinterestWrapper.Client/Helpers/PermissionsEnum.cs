@@ -5,7 +5,7 @@ using System.Text;
 namespace PinterestService.Client.Helpers
 {
     [Flags]
-    internal enum PermissionsEnum
+    public enum PermissionsEnum
     {
         None = 1,
         Read_public = 2,
