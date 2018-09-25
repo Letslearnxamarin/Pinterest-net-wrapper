@@ -7,7 +7,7 @@ using System.Text;
 
 namespace PinterestService.Client
 {
-    internal class PinterestService : BaseService
+    public class PinterestService : BaseService, IPinterestService
     {
         public ConfigHelper Config;
 

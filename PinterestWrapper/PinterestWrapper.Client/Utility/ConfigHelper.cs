@@ -1,8 +1,10 @@
 ﻿using Microsoft.Extensions.Configuration;
+using System.Runtime.CompilerServices;
 
+[assembly: InternalsVisibleTo("PinterestService.Tests")]
 namespace PinterestService.Client.Utility
 {
-    public class ConfigHelper
+    public class ConfigHelper : IConfigHelper
     {
         readonly IConfigurationRoot _configuration;
 

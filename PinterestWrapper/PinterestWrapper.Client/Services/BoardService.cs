@@ -4,10 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
 
 namespace PinterestService.Client.Services
 {
-    internal class BoardService : PinterestService
+    public class BoardService : PinterestService, IBoardService
     {
         
         public BoardService(string accessToken) : base(accessToken)
@@ -15,32 +16,32 @@ namespace PinterestService.Client.Services
 
         }
 
-        public async Task<Board> CreateBoard(string name, string description = null)
+        public virtual async Task<Board> CreateBoard(string name, string description = null)
         {
             return await PostAsync<BaseRequest, Board>(BuildRequestUrl("/boards/"), new BaseRequest() { Name = name, Description = description });
         }
 
-        public async Task<Board> GetBoard(string username, string board_name)
+        public virtual async Task<Board> GetBoard(string username, string board_name)
         {
             return await GetAsync<Board>(BuildRequestUrl($"/boards/{username}/{board_name}"));
         }
 
-        public async Task<Pins> GetBoardPins(string username, string board_name)
+        public virtual async Task<Pins> GetBoardPins(string username, string board_name)
         {
             return await GetAsync<Pins>(BuildRequestUrl($"/boards/{username}/{board_name}/Pins/"));
         }
 
-        public async Task<Boards> GetUsersBoards()
+        public virtual async Task<Boards> GetUsersBoards()
         {
             return await GetAsync<Boards>(BuildRequestUrl($"/me/boards/"));
         }
 
-        public async Task<Board> EditBoard(string username, string board_name, string name, string description)
+        public virtual async Task<Board> EditBoard(string username, string board_name, string name, string description)
         {
             return await PatchAsync<BaseRequest, Board>(BuildRequestUrl($"/boards/{username}/{board_name}"), new BaseRequest() { Name = name, Description = description });
         }
 
-        public async Task<bool> DeleteBoard(string username, string board_name)
+        public virtual async Task<bool> DeleteBoard(string username, string board_name)
         {
             var deleted =  await DeleteAsync<string>(BuildRequestUrl($"/boards/{username}/{board_name}"));
 

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PinterestService.Client.Services
 {
-    internal class PinService : PinterestService
+    public class PinService : PinterestService, IPinService
     {
         public PinService(string accessToken) : base(accessToken)
         {

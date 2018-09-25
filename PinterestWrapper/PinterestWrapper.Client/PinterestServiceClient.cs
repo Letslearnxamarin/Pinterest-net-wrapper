@@ -7,103 +7,30 @@ using System.Threading.Tasks;
 
 namespace PinterestService.Client
 {
-    public class PinterestServiceClient
+    public class PinterestServiceClient : IPinterestServiceClient
     {
         private readonly AuthService _authService;
         private string AccessToken { get; set; }
 
 
         #region ServiceFields
-        private BoardService _boardService;
-        private BoardService BoardService
-        {
-            get
-            {
-
-                if (_boardService != null)
-                    return _boardService;
-
-                AccessTokenGuard();
-
-                _boardService =  new BoardService(AccessToken);
-                return _boardService;
-
-            }
-        }
-
-        private PinService _pinService;
-        private PinService PinService
-        {
-            get
-            {
-
-                if (_pinService != null)
-                    return _pinService;
-
-                AccessTokenGuard();
-
-                _pinService = new PinService(AccessToken);
-                return _pinService;
-
-            }
-        }
-
-
-        private UserService _userService;
-        private UserService UserService
-        {
-            get
-            {
-
-                if (_userService != null)
-                    return _userService;
-
-                AccessTokenGuard();
-
-                _userService =  new UserService(AccessToken);
-                return _userService;
-
-            }
-        }
-
-
-        private SectionService _sectionService;
-        private SectionService SectionService
-        {
-            get
-            {
-
-                if (_sectionService != null)
-                    return _sectionService;
-
-                AccessTokenGuard();
-
-                _sectionService = new SectionService(AccessToken);
-                return _sectionService;
-
-            }
-        }
+        private readonly IBoardService BoardService;
+        private readonly IPinService PinService;
+        private readonly IUserService UserService;
+        private readonly ISectionService SectionService;
         #endregion
 
-        public PinterestServiceClient(string clientId, string clientSecret)
+        public PinterestServiceClient(IBoardService boardService, IPinService pinService, IUserService userService, ISectionService sectionService)
         {
-            _authService = new AuthService(clientId, clientSecret);
+            this.BoardService = boardService;
+            this.PinService = pinService;
+            this.UserService = userService;
+            this.SectionService = sectionService;
         }
-
-        #region AuthService
-
-        public string GetAuthorizationUrl() => _authService.Auth.AuthorizationCodeUrl;
-
-        public async Task<string> GetAccessToken(string accessCode)
-        {
-            return await _authService.GetAccessToken(accessCode);
-        }
-
-        #endregion
-
+        
         #region BoardService
 
-        public async Task<Board> CreateBoard(string name, string description = null)
+        public virtual async Task<Board> CreateBoard(string name, string description = null)
         {
             if (string.IsNullOrEmpty(name))
             {
@@ -167,9 +94,7 @@ namespace PinterestService.Client
         {
             return await PinService.DeletePin(id);
         }
-
-
-
+        
         #endregion
 
         #region UserService

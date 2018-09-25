@@ -5,14 +5,14 @@ using System.Text;
 
 namespace PinterestService.Client
 {
-    public class User
+    public class CurrentUser
     {
         PermissionsEnum _permissionScope { get; set; }
         RateStatus _rates { get; set; }
 
         public string AccessToken { get; set; }
 
-        public User(IEnumerable<string> grantedPermissions)
+        public CurrentUser(IEnumerable<string> grantedPermissions)
         {
             SetPermissions(grantedPermissions);
 

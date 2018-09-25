@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PinterestService.Client.Services
 {
-    internal class SectionService : PinterestService
+    public class SectionService : PinterestService, ISectionService
     {
         public SectionService(string accessToken) : base(accessToken)
         {
@@ -28,12 +28,12 @@ namespace PinterestService.Client.Services
         {
             return await GetAsync<IEnumerable<Sections>>(BuildRequestUrl($"/board/sections/{id}/pins/"));
         }
-        
+
         public async Task<bool> DeleteSection(int id)
         {
             var deleted = await DeleteAsync<string>(BuildRequestUrl($"/board/sections/{id}/"));
             return string.IsNullOrEmpty(deleted);
         }
-        
+
     }
 }

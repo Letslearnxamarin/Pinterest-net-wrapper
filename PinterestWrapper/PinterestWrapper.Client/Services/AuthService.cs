@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PinterestService.Client.Services
 {
-    internal class AuthService : BaseService
+    public class AuthService : BaseService, IAuthService
     {
         public readonly OAuthHelper Auth;
         public AuthService(string clientId, string clientSecret)

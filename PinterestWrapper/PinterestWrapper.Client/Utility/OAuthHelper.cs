@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PinterestService.Client.Utility
 {
-    internal class OAuthHelper
+    public class OAuthHelper
     {
         public ConfigHelper Config;
 
@@ -21,7 +21,7 @@ namespace PinterestService.Client.Utility
             ClientSecret = clientSecret;
             Config = new ConfigHelper();
         }
-
+         
         public string AuthorizationCodeUrl
         {
             get

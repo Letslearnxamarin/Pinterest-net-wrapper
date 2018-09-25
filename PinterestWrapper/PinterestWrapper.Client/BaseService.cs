@@ -5,10 +5,11 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
 
 namespace PinterestService.Client
 {
-    internal abstract class BaseService
+    public abstract class BaseService
     {
         public RequestStatus Status { get; set; }
 

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace PinterestService.Client.Requests
 {
-    internal class TokenRequest
+    public class TokenRequest
     {
         public string Grant_Type { get; set; }
         public string Client_Id { get; set; }
