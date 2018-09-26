@@ -21,4 +21,4 @@ steps:
   displayName: ".NET test"
   inputs:
       command: test
-      projects: 'test\**.csproj'
+      projects: '\**Tests.csproj'
