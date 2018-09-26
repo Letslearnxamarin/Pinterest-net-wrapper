@@ -5,29 +5,31 @@
 
 pool:
   vmImage: 'Ubuntu 16.04'
+  
 variables:
   buildConfiguration: 'Release'
+  
 steps:
 - task: NuGetToolInstaller@0
   displayName: "NuGet use 4.6.2"
   inputs:
-    versionSpec: 4.6.2
+      versionSpec: 4.6.2
 
 - task: NuGetCommand@2
   displayName: "NuGet Restore"
   inputs:
-    restoreSolution: '**/*.csproj'
-    feedsToUse: config
-     nugetConfigPath: NuGet.config
+      restoreSolution: '**/*.csproj'
+      feedsToUse: config
+      nugetConfigPath: NuGet.config
 	
 - task: DotNetCoreCLI@2
   displayName: ".NET build"
   inputs:
-    projects: '**/*.csproj'
-    arguments: --configuration $(BuildConfiguration) --no-restore
+      projects: '**/*.csproj'
+      arguments: --configuration $(BuildConfiguration) --no-restore
 
 - task: DotNetCoreCLI@2
   displayName: ".NET test"
   inputs:
-    command: test
-    projects: 'test\**.csproj'
+      command: test
+      projects: 'test\**.csproj'
