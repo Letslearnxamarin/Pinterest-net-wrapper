@@ -1,9 +1,7 @@
 # Pinterest-net-wrapper
 Pinterest .net SDK Wrapper
 
-
-https://dev.azure.com/letslearnxamarin/Pinterest%20SDK%20.NET/_apis/build/status/Pinterest-net-wrapper.DEV
-
+[![Build Status](https://dev.azure.com/letslearnxamarin/Pinterest%20SDK%20.NET/_apis/build/status/Pinterest-net-wrapper.DEV)](https://dev.azure.com/letslearnxamarin/Pinterest%20SDK%20.NET/_build/latest?definitionId=1)
 
 
 
