@@ -13,11 +13,14 @@ steps:
   inputs:
       versionSpec: 4.6.2
 - task: DotNetCoreCLI@2
-  inputs:
+displayName: Restore Packages
+inputs:
     command: restore
-    projects: '**/*.csproj'
     feedsToUse: config
-    nugetConfigPath: NuGet.config 
+    nugetConfigPath: 'nuget.config'
+    projects: $(buildProjects)
+    noCache: true
+    verbosityRestore: Normal
 - task: DotNetCoreCLI@2
   displayName: ".NET build"
   inputs:
