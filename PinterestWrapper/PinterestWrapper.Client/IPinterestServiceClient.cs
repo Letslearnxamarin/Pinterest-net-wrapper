@@ -25,7 +25,7 @@ namespace PinterestService.Client
         Task<Topics> GetFollowingInterests();
         Task<Users> GetFollowingUsers();
         Task<Pin> GetPin(int id);
-        Task<IEnumerable<Sections>> GetSection(int id);
+        Task<Pins> GetSection(int id);
         Task<Sections> GetSections(string username, string board_name);
         Task<Boards> GetSuggestedBoards(int pinId);
         Task<User> GetUser();

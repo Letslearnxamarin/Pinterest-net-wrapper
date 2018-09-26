@@ -10,6 +10,6 @@ namespace PinterestService.Client.Services
         Task<bool> DeletePin(int id);
         Task<Pin> EditPin(int id, string username = null, string board_name = null, string note = null, string link = null);
         Task<Pin> GetPin(int id);
-        Task<IEnumerable<Pin>> GetUserPins();
+        Task<Pins> GetUserPins();
     }
 }

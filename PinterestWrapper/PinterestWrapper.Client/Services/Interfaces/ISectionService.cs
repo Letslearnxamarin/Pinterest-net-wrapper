@@ -8,7 +8,7 @@ namespace PinterestService.Client.Services
     {
         Task<Section> CreateSection(string username, string board_name, string title);
         Task<bool> DeleteSection(int id);
-        Task<IEnumerable<Sections>> GetSection(int id);
+        Task<Pins> GetSection(int id);
         Task<Sections> GetSections(string username, string board_name);
     }
 }

@@ -24,9 +24,9 @@ namespace PinterestService.Client.Services
             return await GetAsync<Pin>(BuildRequestUrl($"/pins/{id}"));
         }
 
-        public async Task<IEnumerable<Pin>> GetUserPins()
+        public async Task<Pins> GetUserPins()
         {
-            return await GetAsync<IEnumerable<Pin>>(BuildRequestUrl($"/me/pins/"));
+            return await GetAsync<Pins>(BuildRequestUrl($"/me/pins/"));
         }
 
         public async Task<Pin> EditPin(int id, string username = null, string board_name = null, string note = null, string link = null)

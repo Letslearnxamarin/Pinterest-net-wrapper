@@ -198,7 +198,7 @@ namespace PinterestService.Client
             return await SectionService.GetSections(username, board_name);
         }
 
-        public async Task<IEnumerable<Sections>> GetSection(int id)
+        public async Task<Pins> GetSection(int id)
         {
             return await SectionService.GetSection(id);
         }

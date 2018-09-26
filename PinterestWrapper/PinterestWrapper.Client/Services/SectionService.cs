@@ -24,9 +24,9 @@ namespace PinterestService.Client.Services
             return await GetAsync<Sections>(BuildRequestUrl($"/board/{username}/{board_name}/sections/"));
         }
 
-        public async Task<IEnumerable<Sections>> GetSection(int id)
+        public async Task<Pins> GetSection(int id)
         {
-            return await GetAsync<IEnumerable<Sections>>(BuildRequestUrl($"/board/sections/{id}/pins/"));
+            return await GetAsync<Pins>(BuildRequestUrl($"/board/sections/{id}/pins/"));
         }
 
         public async Task<bool> DeleteSection(int id)
