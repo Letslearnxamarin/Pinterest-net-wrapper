@@ -17,7 +17,7 @@ steps:
   inputs:
       restoreSolution: '**/*.csproj'
       feedsToUse: config
-      nugetConfigPath: '$(BuildConfiguration)\NuGet.config'  
+      nugetConfigPath: '/NuGet.Config'  
 - task: DotNetCoreCLI@2
   displayName: ".NET build"
   inputs:
