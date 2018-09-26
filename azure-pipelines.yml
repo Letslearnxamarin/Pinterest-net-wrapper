@@ -12,12 +12,12 @@ steps:
   displayName: "NuGet use 4.6.2"
   inputs:
       versionSpec: 4.6.2
-- task: NuGetCommand@2
-  displayName: "NuGet Restore"
+- task: DotNetCoreCLI@2
   inputs:
-      restoreSolution: '**/*.csproj'
-      feedsToUse: config
-      nugetConfigPath: '/NuGet.Config'  
+    command: restore
+    projects: '**/*.csproj'
+    feedsToUse: config
+    nugetConfigPath: NuGet.config 
 - task: DotNetCoreCLI@2
   displayName: ".NET build"
   inputs:
