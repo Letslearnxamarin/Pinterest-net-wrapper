@@ -10,34 +10,26 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
-# Download the latest recommended NuGet exe
-
 - task: NuGetToolInstaller@0
   displayName: "NuGet use 4.6.2"
   inputs:
-    versionSpec: 4.6.2
-
-# Restore NuGet packages
+	versionSpec: 4.6.2
 
 - task: NuGetCommand@2
   displayName: "NuGet Restore"
   inputs:
-    restoreSolution: '**/*.csproj'
-    feedsToUse: config
-    nugetConfigPath: NuGet.config # you should always have a NuGet.config file!
+	restoreSolution: '**/*.csproj'
+	feedsToUse: config
+	nugetConfigPath: NuGet.config
 	
-# Build your .NET Core project (but avoid restore your packages again)
-
 - task: DotNetCoreCLI@2
   displayName: ".NET build"
   inputs:
-    projects: '**/*.csproj'
-    arguments: --configuration $(BuildConfiguration) --no-restore
-
-# Run your unit tests
+	projects: '**/*.csproj'
+	arguments: --configuration $(BuildConfiguration) --no-restore
 
 - task: DotNetCoreCLI@2
   displayName: ".NET test"
   inputs:
-    command: test
-    projects: 'test\**.csproj'
+	command: test
+	projects: 'test\**.csproj'
