@@ -5,13 +5,11 @@
 
 pool:
   vmImage: 'Ubuntu 16.04'
+
 variables:
   buildConfiguration: 'Release'
-  Major: '1'
-  Minor: '0'
-  Patch: '0'
-steps:
 
+steps:
 - task: NuGetToolInstaller@0
   displayName: "NuGet use 4.6.2"
   inputs:
@@ -20,22 +18,15 @@ steps:
 - task: DotNetCoreCLI@2
   displayName: ".NET build"
   inputs:
+      command: build
       projects: '**/*.csproj'
-      arguments: --configuration $(BuildConfiguration)
+      arguments: --configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)
 
 - task: DotNetCoreCLI@2
   displayName: ".NET test"
   inputs:
       command: test
       projects: '**/*Tests.csproj'
-
-# Prepare publish files
-- task: DotNetCoreCLI@2
-  displayName: Prepare Publish Files
-  inputs:
-    command: publish
-    projects: PinterestWrapper/PinterestWrapper.Client
-    arguments: --output $(Build.ArtifactStagingDirectory)
 
 - task: PublishBuildArtifacts@1
   displayName: Publish Artifacts
