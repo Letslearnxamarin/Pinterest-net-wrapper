@@ -28,21 +28,3 @@ steps:
   inputs:
       command: test
       projects: '**/*Tests.csproj'
-
-- task: NuGetCommand@2
-  displayName: "Pack Nuget"
-  inputs:
-      command: pack
-      versioningScheme: byPrereleaseNumber
-      majorVersion: '$(Major)'
-      minorVersion: '$(Minor)'
-      patchVersion: '$(Patch)'
-
-- task: NuGetCommand@2
-  displayName: "Push Nuget"
-  inputs:
-      command: push
-      nuGetFeedType: external
-      publishFeedCredentials: 'NugetLLX'
-      versioningScheme: byEnvVar
-      versionEnvVar: Version
