@@ -5,10 +5,26 @@
 
 pool:
   vmImage: 'Ubuntu 16.04'
-
 variables:
   buildConfiguration: 'Release'
-
+  Major: '1'
+  Minor: '0'
+  Patch: '0'
 steps:
-- script: dotnet build --configuration $(buildConfiguration)
-  displayName: 'dotnet build $(buildConfiguration)'
+
+- task: NuGetToolInstaller@0
+  displayName: "NuGet use 4.6.2"
+  inputs:
+      versionSpec: 4.6.2
+
+- task: DotNetCoreCLI@2
+  displayName: ".NET build"
+  inputs:
+      projects: '**/*.csproj'
+      arguments: --configuration $(BuildConfiguration)
+
+- task: DotNetCoreCLI@2
+  displayName: ".NET test"
+  inputs:
+      command: test
+      projects: '**/*Tests.csproj'
