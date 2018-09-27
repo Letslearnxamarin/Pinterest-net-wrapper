@@ -29,6 +29,14 @@ steps:
       command: test
       projects: '**/*Tests.csproj'
 
+# Prepare publish files
+- task: DotNetCoreCLI@2
+  displayName: Prepare Publish Files
+  inputs:
+    command: publish
+    projects: PinterestWrapper/PinterestWrapper.Client
+    arguments: --output $(Build.ArtifactStagingDirectory)
+
 - task: PublishBuildArtifacts@1
   displayName: Publish Artifacts
   inputs:
