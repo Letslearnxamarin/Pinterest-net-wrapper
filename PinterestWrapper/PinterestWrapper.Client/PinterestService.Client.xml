@@ -1,0 +1,240 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>PinterestService.Client</name>
+    </assembly>
+    <members>
+        <member name="T:PinterestService.Client.PinterestServiceClient">
+            <summary>
+                Pinterest SDK Client Exposes Full API
+            </summary>
+        </member>
+        <member name="M:PinterestService.Client.PinterestServiceClient.CreatePin(System.String,System.String,System.String,System.String,PinterestService.Client.DataContracts.Image,System.String,System.String)">
+            <summary>
+            Creats a new Pin
+            </summary>
+            <param name="username"></param>
+            <param name="board_name"></param>
+            <param name="note"></param>
+            <param name="link"></param>
+            <param name="image"></param>
+            <param name="image_url"></param>
+            <param name="image_base64"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PinterestService.Client.PinterestServiceClient.GetPin(System.Int32)">
+            <summary>
+            Gets  Pin
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PinterestService.Client.PinterestServiceClient.EditPin(System.Int32,System.String,System.String,System.String,System.String)">
+            <summary>
+            Edit  Pin
+            </summary>
+            <param name="id"></param>
+            <param name="username"></param>
+            <param name="board_name"></param>
+            <param name="note"></param>
+            <param name="link"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PinterestService.Client.PinterestServiceClient.DeletePin(System.Int32)">
+            <summary>
+            Delete a pin
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PinterestService.Client.PinterestServiceClient.GetUser">
+            <summary>
+            Get Current User
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:PinterestService.Client.PinterestServiceClient.GetBoards">
+            <summary>
+            Get Current User Boards
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:PinterestService.Client.PinterestServiceClient.GetUserPins">
+            <summary>
+            Get Current User Pins
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:PinterestService.Client.PinterestServiceClient.GetSuggestedBoards(System.Int32)">
+            <summary>
+            Get Suggested Boards for Pin
+            </summary>
+            <param name="pinId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PinterestService.Client.PinterestServiceClient.SearchBoards(System.String)">
+            <summary>
+            Search Current User Boards
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PinterestService.Client.PinterestServiceClient.SearchPins(System.String)">
+            <summary>
+            Search Current User Pins
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PinterestService.Client.PinterestServiceClient.FollowBoard(System.String,System.String)">
+            <summary>
+            Follow Board
+            </summary>
+            <param name="username"></param>
+            <param name="board_name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PinterestService.Client.PinterestServiceClient.FollowUser(System.String)">
+            <summary>
+            Follow User
+            </summary>
+            <param name="username"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PinterestService.Client.PinterestServiceClient.GetFollowers">
+            <summary>
+            Get Current User Followers
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:PinterestService.Client.PinterestServiceClient.GetFollowingBoards">
+            <summary>
+            Get Current User Following Boards
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:PinterestService.Client.PinterestServiceClient.GetFollowingInterests">
+            <summary>
+            Get Current User Following Interests
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:PinterestService.Client.PinterestServiceClient.GetFollowingUsers">
+            <summary>
+            Get Current User Following Users
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:PinterestService.Client.PinterestServiceClient.UnfollowBoard(System.String,System.String)">
+            <summary>
+            Unfollow Board
+            </summary>
+            <param name="username"></param>
+            <param name="board_name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PinterestService.Client.PinterestServiceClient.UnfollowUser(System.String)">
+            <summary>
+            Unfollow User by UserName
+            </summary>
+            <param name="username"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PinterestService.Client.PinterestServiceClient.UnfollowUser(System.Int32)">
+            <summary>
+            Unfollow user by User ID
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PinterestService.Client.PinterestServiceClient.CreateSection(System.String,System.String,System.String)">
+            <summary>
+            Create a new section for Board
+            </summary>
+            <param name="username"></param>
+            <param name="board_name"></param>
+            <param name="title"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PinterestService.Client.PinterestServiceClient.GetSections(System.String,System.String)">
+            <summary>
+            Get Sections for Board
+            </summary>
+            <param name="username"></param>
+            <param name="board_name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PinterestService.Client.PinterestServiceClient.GetSection(System.Int32)">
+            <summary>
+            Get a specific Section by Id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PinterestService.Client.PinterestServiceClient.DeleteSection(System.Int32)">
+            <summary>
+            Delete a section
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PinterestService.Client.Utility.HttpClientExtensions.PatchAsync(System.Net.Http.HttpClient,System.String,System.Net.Http.HttpContent)">
+            <summary>
+            Send a PATCH request to the specified Uri as an asynchronous operation.
+            </summary>
+            
+            <returns>
+            Returns <see cref="T:System.Threading.Tasks.Task`1"/>.The task object representing the asynchronous operation.
+            </returns>
+            <param name="client">The instantiated Http Client <see cref="T:System.Net.Http.HttpClient"/></param>
+            <param name="requestUri">The Uri the request is sent to.</param>
+            <param name="content">The HTTP request content sent to the server.</param>
+            <exception cref="T:System.ArgumentNullException">The <paramref name="client"/> was null.</exception>
+            <exception cref="T:System.ArgumentNullException">The <paramref name="requestUri"/> was null.</exception>
+        </member>
+        <member name="M:PinterestService.Client.Utility.HttpClientExtensions.PatchAsync(System.Net.Http.HttpClient,System.Uri,System.Net.Http.HttpContent)">
+            <summary>
+            Send a PATCH request to the specified Uri as an asynchronous operation.
+            </summary>
+            
+            <returns>
+            Returns <see cref="T:System.Threading.Tasks.Task`1"/>.The task object representing the asynchronous operation.
+            </returns>
+            <param name="client">The instantiated Http Client <see cref="T:System.Net.Http.HttpClient"/></param>
+            <param name="requestUri">The Uri the request is sent to.</param>
+            <param name="content">The HTTP request content sent to the server.</param>
+            <exception cref="T:System.ArgumentNullException">The <paramref name="client"/> was null.</exception>
+            <exception cref="T:System.ArgumentNullException">The <paramref name="requestUri"/> was null.</exception>
+        </member>
+        <member name="M:PinterestService.Client.Utility.HttpClientExtensions.PatchAsync(System.Net.Http.HttpClient,System.String,System.Net.Http.HttpContent,System.Threading.CancellationToken)">
+            <summary>
+            Send a PATCH request with a cancellation token as an asynchronous operation.
+            </summary>
+            
+            <returns>
+            Returns <see cref="T:System.Threading.Tasks.Task`1"/>.The task object representing the asynchronous operation.
+            </returns>
+            <param name="client">The instantiated Http Client <see cref="T:System.Net.Http.HttpClient"/></param>
+            <param name="requestUri">The Uri the request is sent to.</param>
+            <param name="content">The HTTP request content sent to the server.</param>
+            <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+            <exception cref="T:System.ArgumentNullException">The <paramref name="client"/> was null.</exception>
+            <exception cref="T:System.ArgumentNullException">The <paramref name="requestUri"/> was null.</exception>
+        </member>
+        <member name="M:PinterestService.Client.Utility.HttpClientExtensions.PatchAsync(System.Net.Http.HttpClient,System.Uri,System.Net.Http.HttpContent,System.Threading.CancellationToken)">
+            <summary>
+            Send a PATCH request with a cancellation token as an asynchronous operation.
+            </summary>
+            
+            <returns>
+            Returns <see cref="T:System.Threading.Tasks.Task`1"/>.The task object representing the asynchronous operation.
+            </returns>
+            <param name="client">The instantiated Http Client <see cref="T:System.Net.Http.HttpClient"/></param>
+            <param name="requestUri">The Uri the request is sent to.</param>
+            <param name="content">The HTTP request content sent to the server.</param>
+            <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+            <exception cref="T:System.ArgumentNullException">The <paramref name="client"/> was null.</exception>
+            <exception cref="T:System.ArgumentNullException">The <paramref name="requestUri"/> was null.</exception>
+        </member>
+    </members>
+</doc>
