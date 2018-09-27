@@ -29,7 +29,8 @@ steps:
       command: test
       projects: '**/*Tests.csproj'
 
-- task: Pack Nuget
+- task: NuGetCommand@2
+  displayName: "Pack Nuget"
   inputs:
       command: pack
       versioningScheme: byPrereleaseNumber
@@ -37,7 +38,8 @@ steps:
       minorVersion: '$(Minor)'
       patchVersion: '$(Patch)'
 
-- task: Push Nuget
+- task: NuGetCommand@2
+  displayName: "Push Nuget"
   inputs:
       command: push
       nuGetFeedType: external
