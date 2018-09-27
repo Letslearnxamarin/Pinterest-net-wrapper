@@ -28,3 +28,10 @@ steps:
   inputs:
       command: test
       projects: '**/*Tests.csproj'
+
+- task: PublishBuildArtifacts@1
+  displayName: Publish Artifacts
+  inputs:
+    pathToPublish: $(Build.ArtifactStagingDirectory)
+    artifactName: deploy
+    artifactType: container
