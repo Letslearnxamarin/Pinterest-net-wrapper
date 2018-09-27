@@ -19,7 +19,7 @@ namespace PinterestService.Client.Services
             return await GetAsync<User>(BuildRequestUrl($"/me"));
         }
 
-        public async Task<Boards> GetBoards(int id)
+        public async Task<Boards> GetBoards()
         {
             return await GetAsync<Boards>(BuildRequestUrl($"/me/boards"));
         }

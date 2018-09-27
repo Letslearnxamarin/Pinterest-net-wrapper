@@ -312,14 +312,14 @@ namespace PinterestService.Tests
         public async void GetBoards_NotNull_Test()
         {
             // Assign
-            _userServiceMock.Setup(x => x.GetBoards(123)).Returns(Task.FromResult(new Boards() { new Board() {Id = 2 } }));
+            _userServiceMock.Setup(x => x.GetBoards()).Returns(Task.FromResult(new Boards() { new Board() {Id = 2 } }));
 
             SetTestClient();
 
             //// Act 
-            var response = await _serviceClient.GetBoards(123);
+            var response = await _serviceClient.GetBoards();
 
-            _userServiceMock.Verify(x => x.GetBoards(123));
+            _userServiceMock.Verify(x => x.GetBoards());
 
             Assert.NotNull(response);
         }

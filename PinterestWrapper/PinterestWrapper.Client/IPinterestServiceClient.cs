@@ -19,7 +19,7 @@ namespace PinterestService.Client
         Task<bool> FollowUser(string username);
         Task<Board> GetBoard(string username, string board_name);
         Task<Pins> GetBoardPins(string username, string board_name);
-        Task<Boards> GetBoards(int id);
+        Task<Boards> GetBoards();
         Task<Users> GetFollowers();
         Task<Boards> GetFollowingBoards();
         Task<Topics> GetFollowingInterests();

@@ -6,19 +6,41 @@
 pool:
   vmImage: 'Ubuntu 16.04'
 variables:
-  buildConfiguration: 'Release'
+  - buildConfiguration: 'Release'
+  - Major: '1'
+  - Minor: '0'
+  - Patch: '0'
 steps:
+
 - task: NuGetToolInstaller@0
   displayName: "NuGet use 4.6.2"
   inputs:
       versionSpec: 4.6.2
+
 - task: DotNetCoreCLI@2
   displayName: ".NET build"
   inputs:
       projects: '**/*.csproj'
       arguments: --configuration $(BuildConfiguration)
+
 - task: DotNetCoreCLI@2
   displayName: ".NET test"
   inputs:
       command: test
       projects: '**/*Tests.csproj'
+
+- task: Pack Nuget
+  inputs:
+      command: pack
+      versioningScheme: byPrereleaseNumber
+      majorVersion: '$(Major)'
+      minorVersion: '$(Minor)'
+      patchVersion: '$(Patch)'
+
+- task: Push Nuget
+  inputs:
+      command: push
+      nuGetFeedType: external
+      publishFeedCredentials: 'NugetLLX'
+      versioningScheme: byEnvVar
+      versionEnvVar: Version
