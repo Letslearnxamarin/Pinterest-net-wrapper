@@ -6,10 +6,10 @@
 pool:
   vmImage: 'Ubuntu 16.04'
 variables:
-  - buildConfiguration: 'Release'
-  - Major: '1'
-  - Minor: '0'
-  - Patch: '0'
+  buildConfiguration: 'Release'
+  Major: '1'
+  Minor: '0'
+  Patch: '0'
 steps:
 
 - task: NuGetToolInstaller@0
