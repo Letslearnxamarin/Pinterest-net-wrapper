@@ -16,8 +16,8 @@ steps:
       versionSpec: 4.6.2
 
 - task: DotNetCoreInstaller@0
-displayName: DotNet CLI Installer
-inputs:
+  displayName: DotNet CLI Installer
+  inputs:
     version: 2.1.402
 
 - task: DotNetCoreCLI@2
@@ -41,7 +41,7 @@ inputs:
     sourceFolder: $(Build.SourcesDirectory)
     Contents: |
      **/*.Client/*.dll
-     **/*.Client/*.nuspec
+     **/*.nuspec
      **/*.Client/*.xml
      **/*.Client/*.json
     targetFolder: $(Build.ArtifactStagingDirectory)
