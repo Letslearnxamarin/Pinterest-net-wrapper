@@ -46,6 +46,7 @@ steps:
 - task: bool.update-assembly-info.update-assembly-info-task.update-assembly-info@2
   displayName: 'Update Assembly: **\*AssemblyInfo.*'
   inputs:
+    assemblyInfo: **\*AssemblyInfo.*
     company: 'LetsLearnXamarin'
     product: 'PinterestNetSDK'
     informationalVersion: '$(major).$(minor).$(patch).$(Build.BuildId)'
