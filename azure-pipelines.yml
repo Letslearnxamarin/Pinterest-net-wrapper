@@ -79,7 +79,7 @@ steps:
 - task: CopyFiles@2
   displayName: 'Copy Files PinterestService.Client to: $(build.artifactstagingdirectory)'
   inputs:
-    SourceFolder: '$(build.sourcesdirectory)/PinterestWrapper/PinterestService.Client'
+    SourceFolder: '$(build.sourcesdirectory)/PinterestWrapper/PinterestWrapper.Client'
     Contents: '**/*'
     TargetFolder: '$(build.artifactstagingdirectory)/PinterestService.Client'
     CleanTargetFolder: true
@@ -88,7 +88,7 @@ steps:
   displayName: 'dotnet pack'
   inputs:
     command: pack
-    packagesToPack: '$(build.sourcesDirectory)/PinterestWrapper/PinterestService.Client/PinterestService.Client.csproj'
+    packagesToPack: '$(build.sourcesDirectory)/PinterestWrapper/PinterestWrapper.Client/PinterestService.Client.csproj'
     buildProperties: 'version=$(ApplyVersionToAssemblies)'
 
 - task: PublishBuildArtifacts@1
