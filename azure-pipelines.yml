@@ -30,13 +30,17 @@ steps:
       publishTestResults: true
       arguments: '--no-build -c $(buildConfiguration)'
 
-- task: DotNetCoreCLI@2
-  displayName: Package Projects
+- task: CopyFiles@2 
+  displayName: 'Copy Files to: $(build.ArtifactStagingDirectory)'
   inputs:
-    projects: '**/*.csproj'
-    packDirectory: '$(Build.ArtifactStagingDirectory)'
-    arguments: '-c $(buildConfiguration) /t:Package /p:PackageLocation=$(Build.ArtifactStagingDirectory)'
-
+    sourceFolder: $(Build.SourcesDirectory)
+    Contents: |
+     **\*.Client\*.dll
+     **\*.Client\*.nuspec
+     **\*.Client\*.xml
+     **\*.Client\*.json
+    targetFolder: $(Build.ArtifactStagingDirectory)
+    cleanTargetFolder: true
 
 - task: PublishBuildArtifacts@1
   displayName: Publish Artifacts
