@@ -27,9 +27,16 @@ steps:
   displayName: ".NET test"
   inputs:
       command: test
-      projects: '**/*Tests.csproj'
+      projects: '**/*Tests*.csproj'
       publishTestResults: true
       arguments: '--no-build -c $(buildConfiguration)'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'pack'
+    configuration: 'release'
+    packagesToPack: '**/*.csproj'
+    packDirectory: '$(build.artifactStagingDirectory)'
 
 - task: PublishBuildArtifacts@1
   displayName: Publish Artifacts
