@@ -69,7 +69,15 @@ steps:
     TargetFolder: '$(build.artifactstagingdirectory)/PinterestService.Client'
     CleanTargetFolder: true
 
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet pack'
+  inputs:
+    command: pack
+    packagesToPack: '$(build.sourcesDirectory)/PinterestWrapper/PinterestService.Client/PinterestService.Client.csproj'
+    buildProperties: 'version=$(ApplyVersionToAssemblies)'
+
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact: drop'
   inputs:
     PathtoPublish: '$(build.artifactstagingdirectory)'
+
