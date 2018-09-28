@@ -23,12 +23,6 @@ steps:
   inputs:
     version: 2.1.402
 
-- task: NuGetRestore@1
-  displayName: 'NuGet restore $(build.sourcesDirectory)/PinterestWrapper/PinterestWrapper.sln'
-  inputs:
-    solution: '$(build.sourcesDirectory)/PinterestWrapper/PinterestWrapper.sln'
-    feed: '2d4773ad-c212-46b0-a069-9535ffabdcc6'
-
 - task: PowerShell@2
   displayName: 'Powershell -- apply Version to Assemblies'
   inputs:
@@ -55,7 +49,7 @@ steps:
   inputs:
       command: build
       projects: '**/*.csproj'
-      arguments: --configuration $(BuildConfiguration) --
+      arguments: --configuration $(BuildConfiguration)
 
 - task: DotNetCoreCLI@2
   displayName: ".NET test"
