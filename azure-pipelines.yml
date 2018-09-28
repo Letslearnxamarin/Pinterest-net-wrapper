@@ -36,6 +36,22 @@ steps:
   inputs:
     version: 2.1.402
 
+- task: DotNetCoreCLI@2
+  displayName: ".NET build"
+  inputs:
+      command: build
+      projects: '**/*.csproj'
+      arguments: --configuration $(BuildConfiguration)
+
+- task: DotNetCoreCLI@2
+  displayName: ".NET test"
+  inputs:
+      command: test
+      projects: '**/*Tests.csproj'
+      publishTestResults: true
+      arguments: '--no-build -c $(buildConfiguration)'
+
+      
 - task: PowerShell@2
   displayName: 'Powershell -- apply Version to Assemblies'
   inputs:
@@ -59,20 +75,6 @@ steps:
     assemblyVersionBuild: '$(patch)'
     assemblyVersionRevision: '$(Build.BuildId)'
 
-- task: DotNetCoreCLI@2
-  displayName: ".NET build"
-  inputs:
-      command: build
-      projects: '**/*.csproj'
-      arguments: --configuration $(BuildConfiguration)
-
-- task: DotNetCoreCLI@2
-  displayName: ".NET test"
-  inputs:
-      command: test
-      projects: '**/*Tests.csproj'
-      publishTestResults: true
-      arguments: '--no-build -c $(buildConfiguration)'
 
 - task: CopyFiles@2
   displayName: 'Copy Files PinterestService.Client to: $(build.artifactstagingdirectory)'
