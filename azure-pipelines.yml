@@ -29,7 +29,7 @@ steps:
     solution: '$(build.sourcesDirectory)/PinterestWrapper/PinterestWrapper.sln'
     feed: '2d4773ad-c212-46b0-a069-9535ffabdcc6'
 
-- task: ms-devlabs.utilitytasks.task-PSpp.Powershellpp@0
+- task: PowerShell@2
   displayName: 'Powershell -- apply Version to Assemblies'
   inputs:
     type: FilePath
