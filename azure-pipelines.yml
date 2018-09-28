@@ -32,7 +32,7 @@ steps:
   displayName: 'Copy Files to: $(build.ArtifactStagingDirectory)'
   inputs:
     sourceFolder: $(Build.SourcesDirectory)
-    contents: '**\PinterestWrapper.Client\**'
+    contents: '**/PinterestWrapper.Client/**'
     targetFolder: $(Build.ArtifactStagingDirectory)
 
 - task: PublishBuildArtifacts@1
