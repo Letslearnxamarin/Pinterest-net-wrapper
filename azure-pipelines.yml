@@ -32,7 +32,11 @@ steps:
   displayName: 'Copy Files to: $(build.ArtifactStagingDirectory)'
   inputs:
     sourceFolder: $(Build.SourcesDirectory)
-    contents: '**/PinterestWrapper.Client/**'
+    contents: |
+    **\PinterestWrapper.Client\*.dll
+    **\PinterestWrapper.Client\*.nuspec
+    **\PinterestWrapper.Client\*.xml
+    **\PinterestWrapper.Client\*.json
     targetFolder: $(Build.ArtifactStagingDirectory)
 
 - task: PublishBuildArtifacts@1
