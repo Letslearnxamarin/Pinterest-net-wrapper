@@ -40,7 +40,7 @@ steps:
   inputs:
     sourceFolder: $(Build.SourcesDirectory)
     Contents: |
-     **/*.Client/*.dll
+     **/*.dll
      **/*.nuspec
      **/*.Client/*.xml
      **/*.Client/*.json
