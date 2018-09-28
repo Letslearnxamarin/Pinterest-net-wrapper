@@ -27,7 +27,7 @@ steps:
   displayName: 'Powershell -- apply Version to Assemblies'
   inputs:
     type: FilePath
-    scriptName: '$(Build.SourcesDirectory)\BuildDeployScripts\ApplyVersionToAssemblies.ps1'
+    scriptName: '$(Build.SourcesDirectory)/BuildDeployScripts/ApplyVersionToAssemblies.ps1'
     noCache: true
 
 - task: bool.update-assembly-info.update-assembly-info-task.update-assembly-info@2
