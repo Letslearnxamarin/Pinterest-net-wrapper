@@ -8,6 +8,9 @@ pool:
 
 variables:
   buildConfiguration: 'Release'
+  major: 1
+  minor: 0
+  patch: 0
 
 steps:
 - task: NuGetToolInstaller@0
@@ -20,12 +23,39 @@ steps:
   inputs:
     version: 2.1.402
 
+- task: NuGetRestore@1
+  displayName: 'NuGet restore $(build.sourcesDirectory)/PinterestWrapper/PinterestWrapper.sln'
+  inputs:
+    solution: '$(build.sourcesDirectory)/PinterestWrapper/PinterestWrapper.sln'
+    feed: '2d4773ad-c212-46b0-a069-9535ffabdcc6'
+
+- task: ms-devlabs.utilitytasks.task-PSpp.Powershellpp@0
+  displayName: 'Powershell -- apply Version to Assemblies'
+  inputs:
+    type: FilePath
+    scriptName: '$(Build.SourcesDirectory)\BuildDeployScripts\ApplyVersionToAssemblies.ps1'
+    noCache: true
+
+- task: bool.update-assembly-info.update-assembly-info-task.update-assembly-info@2
+  displayName: 'Update Assembly: **\*AssemblyInfo.*'
+  inputs:
+    company: 'LetsLearnXamarin'
+    product: 'PinterestNetSDK'
+    informationalVersion: '$(major).$(minor).$(patch).$(Rev:r)'
+    fileVersionMajor: '$(major)'
+    fileVersionMinor: '$(minor)'
+    fileVersionBuild: '$(patch)'
+    fileVersionRevision: '$(Rev:r)'
+    assemblyVersionMajor: '$(major)'
+    assemblyVersionMinor: '$(minor)'
+    assemblyVersionBuild: '$(patch)'
+
 - task: DotNetCoreCLI@2
   displayName: ".NET build"
   inputs:
       command: build
       projects: '**/*.csproj'
-      arguments: --configuration $(BuildConfiguration)
+      arguments: --configuration $(BuildConfiguration) --
 
 - task: DotNetCoreCLI@2
   displayName: ".NET test"
@@ -35,21 +65,15 @@ steps:
       publishTestResults: true
       arguments: '--no-build -c $(buildConfiguration)'
 
-- task: CopyFiles@2 
-  displayName: 'Copy Files to: $(build.ArtifactStagingDirectory)'
+- task: CopyFiles@2
+  displayName: 'Copy Files PinterestService.Client to: $(build.artifactstagingdirectory)'
   inputs:
-    sourceFolder: $(Build.SourcesDirectory)
-    Contents: |
-     **/*.dll
-     **/*.nuspec
-     **/*.Client/*.xml
-     **/*.Client/*.json
-    targetFolder: $(Build.ArtifactStagingDirectory)
-    cleanTargetFolder: true
+    SourceFolder: '$(build.sourcesdirectory)\PinterestWrapper\PinterestService.Client'
+    Contents: '**/*'
+    TargetFolder: '$(build.artifactstagingdirectory)/PinterestService.Client'
+    CleanTargetFolder: true
 
 - task: PublishBuildArtifacts@1
-  displayName: Publish Artifacts
+  displayName: 'Publish Artifact: drop'
   inputs:
-    pathToPublish: $(Build.ArtifactStagingDirectory)
-    artifactName: deploy 
-    artifactType: container
+    PathtoPublish: '$(build.artifactstagingdirectory)'
