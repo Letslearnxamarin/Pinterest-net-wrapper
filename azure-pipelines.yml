@@ -31,8 +31,8 @@ steps:
 - task: CopyFiles@2
   displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
   inputs:
-    SourceFolder: '$(Build.SourceDirectory)'
-    TargetFolder: '$(build.artifactstagingdirectory)'
+    SourceFolder: $(Build.SourcesDirectory)
+    TargetFolder: $(Build.artifactstagingdirectory)
 
 - task: PublishBuildArtifacts@1
   displayName: Publish Artifacts
