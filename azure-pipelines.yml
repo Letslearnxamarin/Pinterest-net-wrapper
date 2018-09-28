@@ -16,11 +16,18 @@ steps:
       versionSpec: 4.6.2
 
 - task: DotNetCoreCLI@2
-  displayName: ".NET build"
+  displayName: ".NET build Client"
   inputs:
       command: build
-      projects: '**/*.csproj'
+      projects: '**/PinterestService.Client.csproj'
       arguments: --configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)
+
+- task: DotNetCoreCLI@2
+  displayName: ".NET build Test Project"
+  inputs:
+      command: build
+      projects: '**/PinterestService.Tests.csproj'
+      arguments: --configuration $(BuildConfiguration)
 
 - task: DotNetCoreCLI@2
   displayName: ".NET test"
