@@ -33,10 +33,10 @@ steps:
   inputs:
     sourceFolder: $(Build.SourcesDirectory)
     Contents: |
-     **\PinterestWrapper.Client\*.dll
-     **\PinterestWrapper.Client\*.nuspec
-     **\PinterestWrapper.Client\*.xml
-     **\PinterestWrapper.Client\*.json
+     **\*.dll
+     **\*.nuspec
+     **\*.xml
+     **\*.json
     targetFolder: $(Build.ArtifactStagingDirectory)
     cleanTargetFolder: true
 
