@@ -20,6 +20,7 @@ steps:
   inputs:
       command: build
       projects: '**/*.csproj'
+      packDirectory: '$(Build.ArtifactStagingDirectory)'
       arguments: --configuration $(BuildConfiguration)
 
 - task: DotNetCoreCLI@2
@@ -27,18 +28,8 @@ steps:
   inputs:
       command: test
       projects: '**/*Tests.csproj'
-
-- task: CopyFiles@2 
-  displayName: 'Copy Files to: $(build.ArtifactStagingDirectory)'
-  inputs:
-    sourceFolder: $(Build.SourcesDirectory)
-    Contents: |
-     **\*.dll
-     **\*.nuspec
-     **\*.xml
-     **\*.json
-    targetFolder: $(Build.ArtifactStagingDirectory)
-    cleanTargetFolder: true
+      publishTestResults: true
+      arguments: '--no-build -c $(buildConfiguration)'
 
 - task: PublishBuildArtifacts@1
   displayName: Publish Artifacts
