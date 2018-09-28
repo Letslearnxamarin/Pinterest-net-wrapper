@@ -3,7 +3,7 @@
 # Add steps that run tests, create a NuGet package, deploy, and more:
 # https://docs.microsoft.com/vsts/pipelines/languages/dotnet-core
 
-name: $(Build.DefinitionName)-$(date:yyyyMMdd)$(rev:.r)
+name: $(BuildDefinitionName)_$(major).$(Minor).$(patch)$(Rev:.r)
 
 pool:
   vmImage: 'Ubuntu 16.04'
