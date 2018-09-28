@@ -28,7 +28,7 @@ steps:
       command: test
       projects: '**/*Tests.csproj'
 
-- task: CopyFiles@2
+- task: CopyFiles@2 
   displayName: 'Copy Files to: $(build.ArtifactStagingDirectory)'
   inputs:
     sourceFolder: $(Build.SourcesDirectory)
