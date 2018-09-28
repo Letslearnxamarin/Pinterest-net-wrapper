@@ -16,17 +16,10 @@ steps:
       versionSpec: 4.6.2
 
 - task: DotNetCoreCLI@2
-  displayName: ".NET build Client"
+  displayName: ".NET build"
   inputs:
       command: build
-      projects: '**/PinterestService.Client.csproj'
-      arguments: --configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)
-
-- task: DotNetCoreCLI@2
-  displayName: ".NET build Test Project"
-  inputs:
-      command: build
-      projects: '**/PinterestService.Tests.csproj'
+      projects: '**/*.csproj'
       arguments: --configuration $(BuildConfiguration)
 
 - task: DotNetCoreCLI@2
@@ -34,6 +27,12 @@ steps:
   inputs:
       command: test
       projects: '**/*Tests.csproj'
+
+- task: CopyFiles@2
+  displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
+  inputs:
+    SourceFolder: /
+    TargetFolder: '$(build.artifactstagingdirectory)'
 
 - task: PublishBuildArtifacts@1
   displayName: Publish Artifacts
