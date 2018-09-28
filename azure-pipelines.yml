@@ -31,9 +31,8 @@ steps:
 - task: CopyFiles@2
   displayName: 'Copy Files to: $(build.ArtifactStagingDirectory)'
   inputs:
-    SourceFolder:$(Build.SourcesDirectory)
-    TargetFolder: $(Build.ArtifactStagingDirectory)
     contents: 'PinterestWrapper\PinterestWrapper.Client\**\*'
+    targetFolder: $(Build.ArtifactStagingDirectory)
 
 - task: PublishBuildArtifacts@1
   displayName: Publish Artifacts
