@@ -20,23 +20,27 @@ steps:
   inputs:
       command: build
       projects: '**/*.csproj'
-      packDirectory: '$(Build.ArtifactStagingDirectory)'
       arguments: --configuration $(BuildConfiguration)
 
 - task: DotNetCoreCLI@2
   displayName: ".NET test"
   inputs:
       command: test
-      projects: '**/*Tests*.csproj'
+      projects: '**/*Tests.csproj'
       publishTestResults: true
       arguments: '--no-build -c $(buildConfiguration)'
 
-- task: DotNetCoreCLI@2
+- task: CopyFiles@2 
+  displayName: 'Copy Files to: $(build.ArtifactStagingDirectory)'
   inputs:
-    command: 'pack'
-    configuration: 'release'
-    packagesToPack: '**/*.csproj'
-    packDirectory: '$(build.artifactStagingDirectory)'
+    sourceFolder: $(Build.SourcesDirectory)
+    Contents: |
+     **\*.Client\*.dll
+     **\*.Client\*.nuspec
+     **\*.Client\*.xml
+     **\*.Client\*.json
+    targetFolder: $(Build.ArtifactStagingDirectory)
+    cleanTargetFolder: true
 
 - task: PublishBuildArtifacts@1
   displayName: Publish Artifacts
