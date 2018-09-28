@@ -27,7 +27,7 @@ if(-not ($Env:BUILD_SOURCESDIRECTORY -and $Env:BUILD_BUILDNUMBER))
     Write-Host '$Env:BUILD_SOURCESDIRECTORY = "C:\code\FabrikamTFVC\HelloWorld"'
     Write-Host '$Env:BUILD_BUILDNUMBER - For example, enter something like:'
     Write-Host '$Env:BUILD_BUILDNUMBER = "Build HelloWorld_0000.00.00.0"'
-    exit 1
+    exit 1 
 }
 
 # Make sure path to source code directory is available

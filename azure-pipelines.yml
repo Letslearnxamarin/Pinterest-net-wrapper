@@ -88,6 +88,7 @@ steps:
   displayName: 'dotnet pack'
   inputs:
     command: pack
+    configuration: $(buildConfiguration)
     packagesToPack: '$(build.sourcesDirectory)/PinterestWrapper/PinterestWrapper.Client/PinterestService.Client.csproj'
     buildProperties: 'version=$(ApplyVersionToAssemblies)'
 
