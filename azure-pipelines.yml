@@ -11,6 +11,7 @@ variables:
   major: 1
   minor: 0
   patch: 0
+  Rev: 0
 
 steps:
 - task: NuGetToolInstaller@0
@@ -27,7 +28,7 @@ steps:
   displayName: 'Powershell -- apply Version to Assemblies'
   inputs:
     type: FilePath
-    scriptName: '$(Build.SourcesDirectory)/BuildDeployScripts/ApplyVersionToAssemblies.ps1'
+    filePath: '$(Build.SourcesDirectory)/BuildDeployScripts/ApplyVersionToAssemblies.ps1'
     noCache: true
 
 - task: bool.update-assembly-info.update-assembly-info-task.update-assembly-info@2
@@ -43,6 +44,7 @@ steps:
     assemblyVersionMajor: '$(major)'
     assemblyVersionMinor: '$(minor)'
     assemblyVersionBuild: '$(patch)'
+    assemblyVersionRevision: '$(Rev:r)'
 
 - task: DotNetCoreCLI@2
   displayName: ".NET build"
@@ -62,7 +64,7 @@ steps:
 - task: CopyFiles@2
   displayName: 'Copy Files PinterestService.Client to: $(build.artifactstagingdirectory)'
   inputs:
-    SourceFolder: '$(build.sourcesdirectory)\PinterestWrapper\PinterestService.Client'
+    SourceFolder: '$(build.sourcesdirectory)/PinterestWrapper/PinterestService.Client'
     Contents: '**/*'
     TargetFolder: '$(build.artifactstagingdirectory)/PinterestService.Client'
     CleanTargetFolder: true
