@@ -29,10 +29,11 @@ steps:
       projects: '**/*Tests.csproj'
 
 - task: CopyFiles@2
-  displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
+  displayName: 'Copy Files to: $(build.ArtifactStagingDirectory)'
   inputs:
-    SourceFolder: $(Build.SourcesDirectory)
-    TargetFolder: $(Build.artifactstagingdirectory)
+    SourceFolder:'$(Build.SourcesDirectory)/PinterestWrapper/PinterestWrapper.Client'
+    TargetFolder: $(Build.ArtifactStagingDirectory)
+    contents: '**\*'
 
 - task: PublishBuildArtifacts@1
   displayName: Publish Artifacts
