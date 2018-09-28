@@ -3,7 +3,7 @@
 # Add steps that run tests, create a NuGet package, deploy, and more:
 # https://docs.microsoft.com/vsts/pipelines/languages/dotnet-core
 
-name: $(BuildDefinitionName)_$(major).$(Minor).$(patch)
+name: $(BuildDefinitionName)_$(major).$(Minor).$(patch).0
 
 pool:
   vmImage: 'vs2017-win2016'
@@ -48,13 +48,15 @@ steps:
   inputs:
     company: 'LetsLearnXamarin'
     product: 'PinterestNetSDK'
-    informationalVersion: '$(major).$(minor).$(patch)'
+    informationalVersion: '$(major).$(minor).$(patch).0'
     fileVersionMajor: '$(major)'
     fileVersionMinor: '$(minor)'
     fileVersionBuild: '$(patch)'
+    fileVersionRevision: '0'
     assemblyVersionMajor: '$(major)'
     assemblyVersionMinor: '$(minor)'
     assemblyVersionBuild: '$(patch)'
+    assemblyVersionRevision: '0
 
 - task: DotNetCoreCLI@2
   displayName: ".NET build"
