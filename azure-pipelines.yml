@@ -16,6 +16,16 @@ variables:
   Rev: 0
 
 steps:
+- powershell: |
+    $url = "$($env:SYSTEM_TEAMFOUNDATIONCOLLECTIONURI)$env:SYSTEM_TEAMPROJECTID/_apis/build/definitions/$($env:SYSTEM_DEFINITIONID)?api-version=4.1-preview"
+    Write-Host "URL: $url"
+    $pipeline = Invoke-RestMethod -Uri $url -Headers @{
+      Authorization = "Bearer $env:TOKEN"
+    }
+    Write-Host "Pipeline = $($pipeline | ConvertTo-Json -Depth 100)"
+  env:
+    TOKEN: $(system.accesstoken)
+
 - task: NuGetToolInstaller@0
   displayName: "NuGet use 4.6.2"
   inputs:
