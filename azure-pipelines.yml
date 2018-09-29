@@ -3,23 +3,43 @@
 # Add steps that run tests, create a NuGet package, deploy, and more:
 # https://docs.microsoft.com/vsts/pipelines/languages/dotnet-core
 
+name: $(BuildDefinitionName)_$(major).$(Minor).$(patch).$(Build.BuildId)
+
 pool:
-  vmImage: 'Ubuntu 16.04'
+  vmImage: 'vs2017-win2016'
+
 variables:
   buildConfiguration: 'Release'
-  Major: '1'
-  Minor: '0'
-  Patch: '0'
+  major: 1
+  minor: 0
+  patch: 0
+  Rev: 0
+
 steps:
+- powershell: |
+    $url = "$($env:SYSTEM_TEAMFOUNDATIONCOLLECTIONURI)$env:SYSTEM_TEAMPROJECTID/_apis/build/definitions/$($env:SYSTEM_DEFINITIONID)?api-version=4.1-preview"
+    Write-Host "URL: $url"
+    $pipeline = Invoke-RestMethod -Uri $url -Headers @{
+      Authorization = "Bearer $env:TOKEN"
+    }
+    Write-Host "Pipeline = $($pipeline | ConvertTo-Json -Depth 100)"
+  env:
+    TOKEN: $(system.accesstoken)
 
 - task: NuGetToolInstaller@0
   displayName: "NuGet use 4.6.2"
   inputs:
       versionSpec: 4.6.2 
 
+- task: DotNetCoreInstaller@0
+  displayName: DotNet CLI Installer
+  inputs:
+    version: 2.1.402
+
 - task: DotNetCoreCLI@2
   displayName: ".NET build"
   inputs:
+      command: build
       projects: '**/*.csproj'
       arguments: --configuration $(BuildConfiguration)
 
@@ -28,3 +48,52 @@ steps:
   inputs:
       command: test
       projects: '**/*Tests.csproj'
+      publishTestResults: true
+      arguments: '--no-build -c $(buildConfiguration)'
+
+      
+- task: PowerShell@2
+  displayName: 'Powershell -- apply Version to Assemblies'
+  inputs:
+    type: FilePath
+    filePath: '$(Build.SourcesDirectory)/BuildDeployScripts/ApplyVersionToAssemblies.ps1'
+    noCache: true
+
+- task: bool.update-assembly-info.update-assembly-info-task.update-assembly-info@2
+  displayName: 'Update Assembly: **\*AssemblyInfo.*'
+  inputs:
+    assemblyInfo: '**\*AssemblyInfo.*'
+    company: 'LetsLearnXamarin'
+    product: 'PinterestNetSDK'
+    informationalVersion: '$(major).$(minor).$(patch).$(Build.BuildId)'
+    fileVersionMajor: '$(major)'
+    fileVersionMinor: '$(minor)'
+    fileVersionBuild: '$(patch)'
+    fileVersionRevision: '$(Build.BuildId)'
+    assemblyVersionMajor: '$(major)'
+    assemblyVersionMinor: '$(minor)'
+    assemblyVersionBuild: '$(patch)'
+    assemblyVersionRevision: '$(Build.BuildId)'
+
+
+- task: CopyFiles@2
+  displayName: 'Copy Files PinterestService.Client to: $(build.artifactstagingdirectory)'
+  inputs:
+    SourceFolder: '$(build.sourcesdirectory)/PinterestWrapper/PinterestWrapper.Client'
+    Contents: '**/*'
+    TargetFolder: '$(build.artifactstagingdirectory)/PinterestService.Client'
+    CleanTargetFolder: true
+
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet pack'
+  inputs:
+    command: pack
+    configuration: $(buildConfiguration)
+    packagesToPack: '$(build.sourcesDirectory)/PinterestWrapper/PinterestWrapper.Client/PinterestService.Client.csproj'
+    buildProperties: 'version=$(ApplyVersionToAssemblies)'
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact: drop'
+  inputs:
+    PathtoPublish: '$(build.artifactstagingdirectory)'
+
