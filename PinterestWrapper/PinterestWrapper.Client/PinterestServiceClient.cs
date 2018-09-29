@@ -18,7 +18,7 @@ namespace PinterestService.Client
         private readonly IBoardService BoardService;
         private readonly IPinService PinService;
         private readonly IUserService UserService;
-        private readonly ISectionService SectionService;
+        private readonly ISectionService SectionService; 
         #endregion
 
         public PinterestServiceClient(IBoardService boardService, IPinService pinService, IUserService userService, ISectionService sectionService)
